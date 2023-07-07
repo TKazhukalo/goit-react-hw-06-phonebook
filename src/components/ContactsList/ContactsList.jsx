@@ -1,25 +1,36 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { Button, ContactItem, ListItem } from "./ContactsList.styled";
-export const ContactsList=({contacts, onDelete })=>{
+import { useDispatch, useSelector } from "react-redux";
+import { visibleContacts } from "redux/selectors";
+import { deleteContact } from "redux/contactsSlice";
+
+export const ContactsList = () => {
+  const contacts = useSelector(visibleContacts);
+  const dispatch = useDispatch();
+
+  const onDelete = (id) => {
+    dispatch(deleteContact(id));
+  };
+
+  return (
+    <ListItem>
+      {contacts.map(({ name, number, id }) => {
         return (
-            <ListItem>
-                {contacts.map(({ name, number, id }) => {
-                    return (
-                        <ContactItem key={id}>
-                            <span>
-                                {name}: {number}
-                            </span>
-                            <Button type="button" onClick={() => onDelete(id)}>
-                                Delete
-                            </Button>
-                        </ContactItem>
-                    );
-                })}
-            </ListItem>
-        )
-}
-    
+          <ContactItem key={id}>
+            <span>
+              {name}: {number}
+            </span>
+            <Button type="button" onClick={() => onDelete(id)}>
+              Delete
+            </Button>
+          </ContactItem>
+        );
+      })}
+    </ListItem>
+  );
+};
+
 ContactsList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -29,25 +40,3 @@ ContactsList.propTypes = {
     })
   ).isRequired,
 };
-
-// export class ContactsList extends Component {
-//     render() {
-//         const { contacts, onDelete } = this.props;
-//         return (
-//             <ListItem>
-//                 {contacts.map(({ name, number, id }) => {
-//                     return (
-//                         <ContactItem key={id}>
-//                             <span>
-//                                 {name}: {number}
-//                             </span>
-//                             <Button type="button" onClick={() => onDelete(id)}>
-//                                 Delete
-//                             </Button>
-//                         </ContactItem>
-//                     );
-//                 })}
-//             </ListItem>
-//         )
-//     }
-// }

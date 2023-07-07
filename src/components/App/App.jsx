@@ -6,10 +6,12 @@ import { ContactsList } from 'components/ContactsList/ContactsList';
 import { Filter } from 'components/Filter/Filter';
 import { Form } from 'components/Form/Form';
 import { Section } from 'components/Section/Section';
-import { addContact, deleteContact, setFilter } from 'redux/contactsSlice';
+import { addContact, deleteContact} from 'redux/contactsSlice';
+import { changeFilter } from 'redux/filterSlice';
+import { visibleContacts } from 'redux/selectors';
 
 export const App = () => {
-  const contacts = useSelector(state => state.items);
+  const contacts = useSelector(visibleContacts);
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
@@ -41,8 +43,8 @@ export const App = () => {
     dispatch(deleteContact(contactId));
   };
 
-  const changeFilter = evt => {
-    dispatch(setFilter(evt.target.value));
+  const changeFilters = evt => {
+    dispatch(changeFilter(evt.target.value));
   };
 
   const normalizedFilter = filter.toLowerCase();
@@ -57,7 +59,7 @@ export const App = () => {
       </Section>
 
       <Section title="Contacts">
-        <Filter value={filter} onChange={changeFilter} />
+        <Filter value={filter} onChange={changeFilters} />
         <ContactsList contacts={filteredContacts} onDelete={handleDeleteContact} />
       </Section>
     </Container>
