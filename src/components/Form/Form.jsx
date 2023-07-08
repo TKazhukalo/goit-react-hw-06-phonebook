@@ -8,8 +8,8 @@ import { visibleContacts } from 'redux/selectors';
 
 export const Form=()=>{
 const nameId = nanoid();
-  const numberId = nanoid();
-  const contacts = useSelector(visibleContacts);
+const numberId = nanoid();
+const contacts = useSelector(visibleContacts);
 const dispatch = useDispatch();
 const [name, setName] = useState('');
 const [number, setNumber] = useState('');
@@ -41,11 +41,6 @@ const handleSubmit = evt => {
     setName('');
     setNumber('')
 };
-
-// const reset = () => {
-//     setName('');
-//     setNumber('')
-// };
     return (
        <FormContainer onSubmit={handleSubmit}>
                 <Label htmlFor={nameId}>Name:</Label>
@@ -72,6 +67,5 @@ const handleSubmit = evt => {
                 />
                 <Button type="submit">Add contact</Button>
             </FormContainer>
-        );
-        
+        );        
 }

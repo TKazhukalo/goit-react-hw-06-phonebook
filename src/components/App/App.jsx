@@ -1,4 +1,4 @@
-//import { useEffect } from 'react';
+
 import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container } from './App.styled';
@@ -28,12 +28,9 @@ export const App = () => {
     }
   };
 
-
-
   const changeFilters = evt => {
     dispatch(changeFilter(evt.target.value));
   };
-
 
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter)
@@ -44,7 +41,6 @@ export const App = () => {
       <Section title="Phonebook">
         <Form onSubmit={handleCreateContacts} />
       </Section>
-
       <Section title="Contacts">
         <Filter value={filter} onChange={changeFilters} />
         <ContactsList contacts={filteredContacts} onDelete={()=>dispatch(deleteContact())} />

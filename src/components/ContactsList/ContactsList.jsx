@@ -7,9 +7,6 @@ import { deleteContact } from "redux/contactsSlice";
 export const ContactsList = () => {
   const contacts = useSelector(visibleContacts);
   const dispatch = useDispatch();
-
- 
-
   return (
     <ListItem>
       {contacts.map(({ name, number, id }) => {

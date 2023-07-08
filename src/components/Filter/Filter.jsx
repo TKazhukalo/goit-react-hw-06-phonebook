@@ -5,11 +5,9 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { changeFilter } from 'redux/filterSlice';
 
-
 export const Filter = ({ value }) => {
    const dispatch = useDispatch();
-   const filterId = nanoid();
-    
+   const filterId = nanoid();  
 return (
       <FormContainer>
         <Label htmlFor={filterId}>Find contacts by name</Label>
