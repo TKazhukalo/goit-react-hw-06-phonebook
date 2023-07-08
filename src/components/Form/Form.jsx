@@ -1,35 +1,51 @@
 import React, { useState } from 'react';
-
 import { nanoid } from "nanoid";
 import { FormContainer, Input, Label } from "./Form.styled";
 import { Button } from "components/ContactsList/ContactsList.styled";
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { visibleContacts } from 'redux/selectors';
 
-export const Form=({onSubmit})=>{
+export const Form=()=>{
 const nameId = nanoid();
- const  numberId = nanoid();
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+  const numberId = nanoid();
+  const contacts = useSelector(visibleContacts);
+const dispatch = useDispatch();
+const [name, setName] = useState('');
+const [number, setNumber] = useState('');
   
 const handleChange = evt => {
-    
    const { name, value } = evt.target;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
     }
   };
 
 const handleSubmit = evt => {
-    evt.preventDefault();
-    onSubmit({name,number});
-    reset();
-};
-
-const reset = () => {
+  evt.preventDefault();
+    const isInContacts = contacts.some(
+      contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
+    );
+      if (isInContacts) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+    dispatch(addContact({name,number}));
     setName('');
     setNumber('')
 };
+
+// const reset = () => {
+//     setName('');
+//     setNumber('')
+// };
     return (
        <FormContainer onSubmit={handleSubmit}>
                 <Label htmlFor={nameId}>Name:</Label>
